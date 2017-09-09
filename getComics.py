@@ -1,19 +1,15 @@
+import os
 from plyer import notification
 from bs4 import BeautifulSoup
 import requests
-import os
 
 
 def getImageUrl():
     result = requests.get("http://explosm.net/")
     html_doc = result.content
     soup = BeautifulSoup(html_doc, 'html.parser')
-
     latest_comic_anchor = soup.find(href="/comics/latest/")
-
-    return "http:" + latest_comic_anchor.img["src"];
-
-
+    return "http:" + latest_comic_anchor.img["src"]
 
 
 def downloadImageData(latest_comic_url):
