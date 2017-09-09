@@ -13,11 +13,13 @@ latestComicUrl = "http:" + latestComicAnchor.img["src"]
 
 
 img_data = requests.get(latestComicUrl)
-img_content = img_data.content
-img_extension = img_data.headers["content-type"].split("/")[1]
-with open('../comics/img.' + img_extension, 'wb') as handler:
-    handler.write(img_content) 
-
+if img_data.status_code == 200: (
+    img_content = img_data.content
+    img_extension = img_data.headers["content-type"].split("/")[1]
+    with open('../comics/img.' + img_extension, 'wb') as handler:
+        handler.write(img_content) 
+)
+else: print("Could not download file")
 
 
 ''' notification.notify(
