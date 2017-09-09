@@ -3,24 +3,37 @@ from bs4 import BeautifulSoup
 import requests
 
 
-result = requests.get("http://explosm.net/")
-html_doc = result.content
-soup = BeautifulSoup(html_doc, 'html.parser')
+def getImageUrl():
+    result = requests.get("http://explosm.net/")
+    html_doc = result.content
+    soup = BeautifulSoup(html_doc, 'html.parser')
 
-latestComicAnchor = soup.find(href="/comics/latest/")
-latestComicUrl = "http:" + latestComicAnchor.img["src"]
+    latest_comic_anchor = soup.find(href="/comics/latest/")
+
+    return "http:" + latest_comic_anchor.img["src"];
 
 
 
-img_data = requests.get(latestComicUrl)
-if img_data.status_code == 200: (
+
+def downloadImageData(latest_comic_url):
+    img_data = requests.get(latest_comic_url)
+    if img_data.status_code == 200: 
+        createImageFile(img_data)
+    else: 
+        print("Could not download file")
+
+def createImageFile(img_data):
     img_content = img_data.content
     img_extension = img_data.headers["content-type"].split("/")[1]
     with open('../comics/img.' + img_extension, 'wb') as handler:
         handler.write(img_content) 
-)
-else: print("Could not download file")
 
+
+def main():
+    latest_comic_url = getImageUrl()
+    downloadImageData(latest_comic_url)
+
+main()
 
 ''' notification.notify(
     title='Here is the title',
