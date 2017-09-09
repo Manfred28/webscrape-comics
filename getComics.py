@@ -25,7 +25,7 @@ def downloadImageData(latest_comic_url):
 def createImageFile(img_data):
     img_content = img_data.content
     img_extension = img_data.headers["content-type"].split("/")[1]
-    with open('../comics/img.' + img_extension, 'wb') as handler:
+    with open('comics/img.' + img_extension, 'wb') as handler:
         handler.write(img_content) 
 
 
