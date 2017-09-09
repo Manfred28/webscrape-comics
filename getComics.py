@@ -4,12 +4,16 @@ from bs4 import BeautifulSoup
 import requests
 
 
-def getImageUrl():
-    result = requests.get("http://explosm.net/")
+def getLatestComic():
+    result = requests.get("http://explosm.net/comics/latest")
     html_doc = result.content
+    img_url = getImageUrl(html_doc)
+    return img_url
+
+def getImageUrl(html_doc):
     soup = BeautifulSoup(html_doc, 'html.parser')
-    latest_comic_anchor = soup.find(href="/comics/latest/")
-    return "http:" + latest_comic_anchor.img["src"]
+    img_tag = soup.find(id="main-comic")
+    return "http:" + img_tag["src"]
 
 
 def downloadImageData(latest_comic_url):
@@ -32,7 +36,7 @@ def createImageFile(img_data):
 
 
 def main():
-    latest_comic_url = getImageUrl()
+    latest_comic_url = getLatestComic()
     downloadImageData(latest_comic_url)
 
 main()
