@@ -1,17 +1,26 @@
 import os
+from urllib.parse import urlparse
 from plyer import notification
 from bs4 import BeautifulSoup
 import requests
 
-
 def getLatestComic():
     result = requests.get("http://explosm.net/comics/latest")
     html_doc = result.content
-    img_url = getImageUrl(html_doc)
-    return img_url
-
-def getImageUrl(html_doc):
     soup = BeautifulSoup(html_doc, 'html.parser')
+    
+    getImageID(soup)
+    img_url = getImageUrl(soup)
+    return img_url 
+    ''' need to get comic id as well,  its in the header '''
+
+def getImageID(soup):
+    meta = soup.find(property="og:url")
+    img_url_with_id = meta["content"]
+    img_id = img_url_with_id.split("/")[-2]
+    return img_id
+
+def getImageUrl(soup):
     img_tag = soup.find(id="main-comic")
     return "http:" + img_tag["src"]
 
