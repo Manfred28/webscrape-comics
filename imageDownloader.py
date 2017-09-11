@@ -2,12 +2,12 @@ import requests
 import os
 
 def downloadImage(url, destination):
-    img_data = requests.get(url)
-    if img_data.status_code == 200:
+    try: 
+        img_data = requests.get(url)
         createDestinationFolder(destination)
         createImageFile(img_data, destination)
-    else:
-        print("Could not download file")
+    except requests.exceptions.RequestException as e:
+        print(e)
 
 def createDestinationFolder(destination):
     if not os.path.exists(destination):
