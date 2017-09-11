@@ -12,8 +12,7 @@ def getLatestComic():
     return img_url
 
 def getImageId(soup):
-    meta = soup.find(property="og:url")
-    img_url_with_id = meta["content"]
+    img_url_with_id = soup.find(property="og:url")["content"]
     img_id = img_url_with_id.split("/")[-2]
     writeIdToConfig(img_id)
 
