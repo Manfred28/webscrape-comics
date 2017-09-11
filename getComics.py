@@ -7,9 +7,9 @@ def getLatestComic():
     html_doc = result.content
     soup = BeautifulSoup(html_doc, 'html.parser')
     
-    getImageID(soup)
+    img_id = getImageID(soup)
     img_url = getImageUrl(soup)
-    return img_url
+    return img_url, img_id
 
 def getImageID(soup):
     meta = soup.find(property="og:url")
@@ -42,7 +42,7 @@ def createImageFile(img_data):
 
 
 def main():
-    latest_comic_url = getLatestComic()
+    latest_comic_url, latest_comic_id = getLatestComic()
     downloadImageData(latest_comic_url)
 
 main()
