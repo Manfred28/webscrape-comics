@@ -2,19 +2,23 @@ import os
 from bs4 import BeautifulSoup
 import requests
 
-def getLatestComic():
+class ComicUrlParser:
+    img_url = ""
+
+    def __init__(self, url):
+        self.url = url
+    
+    def parse_html(self):
+        result = requests.get(self.url)
+        html_doc = result.content
+        parsed_html = BeautifulSoup(html_doc, 'html.parser')
+        img_html_tag = self.parsed_html.find(id="main-comic")
+        self.image_url = "http:" + img_html_tag["src"]
+
+''' def getLatestComic():
     result = requests.get("http://explosm.net/comics/latest")
     html_doc = result.content
     soup = BeautifulSoup(html_doc, 'html.parser')
-    
-    getImageId(soup)
-    img_url = getImageUrl(soup)
-    return img_url
-
-def getImageId(soup):
-    img_url_with_id = soup.find(property="og:url")["content"]
-    img_id = img_url_with_id.split("/")[-2]
-    writeIdToConfig(img_id)
 
 def writeIdToConfig(img_id):
     with open("config.txt", "w") as config:
@@ -22,7 +26,7 @@ def writeIdToConfig(img_id):
 
 def getImageUrl(soup):
     img_tag = soup.find(id="main-comic")
-    return "http:" + img_tag["src"]
+    return "http:" + img_tag["src"] '''
 
 
 def downloadImageData(latest_comic_url):
@@ -45,7 +49,8 @@ def createImageFile(img_data):
 
 
 def main():
-    latest_comic_url = getLatestComic()
-    downloadImageData(latest_comic_url)
+    CAH_parser = ComicUrlParser("http://explosm.net/comics/latest")
+    CAH_parser.parse_html()
+    downloadImageData(CAH_parser.image_url)
 
 main()
