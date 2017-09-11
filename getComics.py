@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-from image_downloader import downloadImageData
+from imageDownloader import downloadImage
 
 class ComicUrlParser:
     img_url = ""
@@ -16,6 +16,6 @@ class ComicUrlParser:
 def main():
     CAH_parser = ComicUrlParser()
     CAH_parser.parse_html("http://explosm.net/comics/latest")
-    downloadImageData(CAH_parser.image_url)
+    downloadImage(CAH_parser.image_url, "./comics/CAH/")
 
 main()
