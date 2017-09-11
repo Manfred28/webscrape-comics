@@ -1,6 +1,4 @@
 import os
-from urllib.parse import urlparse
-from plyer import notification
 from bs4 import BeautifulSoup
 import requests
 
@@ -11,8 +9,7 @@ def getLatestComic():
     
     getImageID(soup)
     img_url = getImageUrl(soup)
-    return img_url 
-    ''' need to get comic id as well,  its in the header '''
+    return img_url
 
 def getImageID(soup):
     meta = soup.find(property="og:url")
@@ -49,8 +46,3 @@ def main():
     downloadImageData(latest_comic_url)
 
 main()
-
-''' notification.notify(
-    title='Here is the title',
-    message='Here is the message',
-) '''
