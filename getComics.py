@@ -7,15 +7,19 @@ def getLatestComic():
     html_doc = result.content
     soup = BeautifulSoup(html_doc, 'html.parser')
     
-    img_id = getImageID(soup)
+    getImageId(soup)
     img_url = getImageUrl(soup)
-    return img_url, img_id
+    return img_url
 
-def getImageID(soup):
+def getImageId(soup):
     meta = soup.find(property="og:url")
     img_url_with_id = meta["content"]
     img_id = img_url_with_id.split("/")[-2]
-    return img_id
+    writeIdToConfig(img_id)
+
+def writeIdToConfig(img_id):
+    with open("config.txt", "w") as config:
+        config.write(img_id)
 
 def getImageUrl(soup):
     img_tag = soup.find(id="main-comic")
@@ -42,7 +46,7 @@ def createImageFile(img_data):
 
 
 def main():
-    latest_comic_url, latest_comic_id = getLatestComic()
+    latest_comic_url = getLatestComic()
     downloadImageData(latest_comic_url)
 
 main()
