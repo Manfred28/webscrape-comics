@@ -9,6 +9,7 @@ class ComicRssHtmlParser:
         self.latest_comic_url= ""
         self.parsed_html = ""
         self.image_url = ""
+        self.image_id = ""
 
     def get_latest_comic_url(self):
         self.latest_comic_url = self.rss.entries[0].guid
@@ -22,16 +23,22 @@ class ComicRssHtmlParser:
     def find_image(self):
         return ""
 
+    def parse_comic_id(self):
+        self.image_id = self.image_url.split("/")[-2]
+
+
 class CAH_parser(ComicRssHtmlParser):
     def find_image(self):
         img_html_tag = self.parsed_html.find(id="main-comic")
         self.image_url = "http:" + img_html_tag["src"]
+
 
 class xkcd_parser(ComicRssHtmlParser):
     def find_image(self):
         img_container = self.parsed_html.find(id="comic")
         self.image_url = "http:" + img_container.img["src"]
         print(self.image_url)
+
 
 def main():
     CAH = CAH_parser("https://explosm-1311.appspot.com/")
