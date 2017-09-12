@@ -24,7 +24,7 @@ class ComicRssHtmlParser:
         return ""
 
     def parse_comic_id(self):
-        self.image_id = self.image_url.split("/")[-2]
+        self.image_id = self.latest_comic_url.split("/")[-2]
 
 
 class CAH_parser(ComicRssHtmlParser):
@@ -37,7 +37,6 @@ class xkcd_parser(ComicRssHtmlParser):
     def find_image(self):
         img_container = self.parsed_html.find(id="comic")
         self.image_url = "http:" + img_container.img["src"]
-        print(self.image_url)
 
 
 def main():
