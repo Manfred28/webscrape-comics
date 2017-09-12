@@ -11,6 +11,11 @@ class ComicRssHtmlParser:
         self.image_url = ""
         self.image_id = ""
 
+        self.get_latest_comic_url()
+        self.get_comic_id()
+        self.parse_comic_html()
+        self.parse_image_download_url()
+
     def get_latest_comic_url(self):
         self.latest_comic_url = self.rss.entries[0].guid
 
@@ -18,30 +23,28 @@ class ComicRssHtmlParser:
         result = requests.get(self.latest_comic_url)
         comic_html = result.content
         self.parsed_html = BeautifulSoup(comic_html, 'html.parser')
-        self.find_image()
+        self.parse_image_download_url()
 
-    def find_image(self):
+    def parse_image_download_url(self):
         self.image_url = ""
 
-    def parse_comic_id(self):
+    def get_comic_id(self):
         self.image_id = self.latest_comic_url.split("/")[-2]
 
 
 class CAH_parser(ComicRssHtmlParser):
     def __init__(self):
-        super().__init__(self)
-        self.rss = feedparser.parse("https://explosm-1311.appspot.com/")
+        super().__init__("https://explosm-1311.appspot.com/")
 
-    def find_image(self):
+    def parse_image_download_url(self):
         img_html_tag = self.parsed_html.find(id="main-comic")
         self.image_url = "http:" + img_html_tag["src"]
 
 
 class xkcd_parser(ComicRssHtmlParser):
     def __init__(self):
-        super().__init__(self)
-        self.rss = feedparser.parse("https://xkcd.com/rss.xml")
+        super().__init__("https://xkcd.com/rss.xml")
 
-    def find_image(self):
+    def parse_image_download_url(self):
         img_container = self.parsed_html.find(id="comic")
         self.image_url = "http:" + img_container.img["src"]
