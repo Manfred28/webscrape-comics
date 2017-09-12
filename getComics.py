@@ -3,27 +3,36 @@ import requests
 import feedparser
 from imageDownloader import downloadImage
 
-class ComicRssParser:
-
+class ComicRssHtmlParser:
     def __init__(self, rss):
         self.rss = feedparser.parse(rss)
         self.latest_comic_url= ""
+        self.parsed_html = ""
         self.image_url = ""
 
     def get_latest_comic_url(self):
         self.latest_comic_url = self.rss.entries[0].guid
 
-    def get_image_url(self):
+    def parse_comic_html(self):
         result = requests.get(self.latest_comic_url)
-        html_doc = result.content
-        parsed_html = BeautifulSoup(html_doc, 'html.parser')
-        img_html_tag = parsed_html.find(id="main-comic")
+        comic_html = result.content
+        self.parsed_html = BeautifulSoup(comic_html, 'html.parser')
+        self.find_image()
+
+    def find_image(self):
+        return ""
+
+class CAH_parser(ComicRssHtmlParser):
+    def find_image(self):
+        img_html_tag = self.parsed_html.find(id="main-comic")
         self.image_url = "http:" + img_html_tag["src"]
 
+
+
 def main():
-    CAH_parser = ComicRssParser("https://explosm-1311.appspot.com/")
-    CAH_parser.get_latest_comic_url()
-    CAH_parser.get_image_url()
-    downloadImage(CAH_parser.image_url, "./comics/CAH/")
+    CAH = CAH_parser("https://explosm-1311.appspot.com/")
+    CAH.get_latest_comic_url()
+    CAH.parse_comic_html()
+    downloadImage(CAH.image_url, "./comics/CAH/")
 
 main()
