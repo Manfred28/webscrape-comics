@@ -8,7 +8,7 @@ class ComicRssHtmlParser:
         self.rss = feedparser.parse(rss)
         self.latest_comic_url= ""
         self.parsed_html = ""
-        self.image_url = ""
+        self.image_download_url = ""
         self.image_id = ""
 
         self.get_latest_comic_url()
@@ -26,7 +26,7 @@ class ComicRssHtmlParser:
         self.parse_image_download_url()
 
     def parse_image_download_url(self):
-        self.image_url = ""
+        self.image_download_url = ""
 
     def get_comic_id(self):
         self.image_id = self.latest_comic_url.split("/")[-2]

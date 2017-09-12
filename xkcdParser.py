@@ -1,4 +1,4 @@
-from getComics import ComicRssHtmlParser
+from comicParser import ComicRssHtmlParser
 
 class xkcd_parser(ComicRssHtmlParser):
     def __init__(self):

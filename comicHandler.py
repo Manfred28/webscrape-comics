@@ -5,7 +5,7 @@ from imageDownloader import downloadImage
 class ComicHandler:
     def getLatestCah(self):
         CAH = cah_parser()
-        downloadImage(CAH.image_url, "./comics/CAH/")
+        downloadImage(CAH.image_download_url, "./comics/CAH/")
 
     def getLatestXkcd(self):
         xkcd = xkcd_parser()
