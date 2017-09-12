@@ -28,12 +28,20 @@ class ComicRssHtmlParser:
 
 
 class CAH_parser(ComicRssHtmlParser):
+    def __init__(self):
+        super().__init__(self)
+        self.rss = feedparser.parse("https://explosm-1311.appspot.com/")
+
     def find_image(self):
         img_html_tag = self.parsed_html.find(id="main-comic")
         self.image_url = "http:" + img_html_tag["src"]
 
 
 class xkcd_parser(ComicRssHtmlParser):
+    def __init__(self):
+        super().__init__(self)
+        self.rss = feedparser.parse("https://xkcd.com/rss.xml")
+
     def find_image(self):
         img_container = self.parsed_html.find(id="comic")
         self.image_url = "http:" + img_container.img["src"]
