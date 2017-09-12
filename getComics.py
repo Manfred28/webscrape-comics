@@ -32,19 +32,4 @@ class ComicRssHtmlParser:
         self.image_id = self.latest_comic_url.split("/")[-2]
 
 
-class CAH_parser(ComicRssHtmlParser):
-    def __init__(self):
-        super().__init__("https://explosm-1311.appspot.com/")
 
-    def parse_image_download_url(self):
-        img_html_tag = self.parsed_html.find(id="main-comic")
-        self.image_url = "http:" + img_html_tag["src"]
-
-
-class xkcd_parser(ComicRssHtmlParser):
-    def __init__(self):
-        super().__init__("https://xkcd.com/rss.xml")
-
-    def parse_image_download_url(self):
-        img_container = self.parsed_html.find(id="comic")
-        self.image_url = "http:" + img_container.img["src"]
