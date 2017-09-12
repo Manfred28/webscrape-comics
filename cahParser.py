@@ -6,4 +6,4 @@ class cah_parser(ComicRssHtmlParser):
 
     def parse_image_download_url(self):
         img_html_tag = self.parsed_html.find(id="main-comic")
-        self.image_url = "http:" + img_html_tag["src"]
+        self.image_download_url = "http:" + img_html_tag["src"]

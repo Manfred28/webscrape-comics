@@ -6,4 +6,4 @@ class xkcd_parser(ComicRssHtmlParser):
 
     def parse_image_download_url(self):
         img_container = self.parsed_html.find(id="comic")
-        self.image_url = "http:" + img_container.img["src"]
+        self.image_download_url = "http:" + img_container.img["src"]
