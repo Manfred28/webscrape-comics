@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import feedparser
-from imageDownloader import downloadImage
+
 
 class ComicRssHtmlParser:
     def __init__(self, rss):
@@ -37,17 +37,3 @@ class xkcd_parser(ComicRssHtmlParser):
     def find_image(self):
         img_container = self.parsed_html.find(id="comic")
         self.image_url = "http:" + img_container.img["src"]
-
-
-def main():
-    CAH = CAH_parser("https://explosm-1311.appspot.com/")
-    CAH.get_latest_comic_url()
-    CAH.parse_comic_html()
-    downloadImage(CAH.image_url, "./comics/CAH/")
-
-    xkcd = xkcd_parser("https://xkcd.com/rss.xml")
-    xkcd.get_latest_comic_url()
-    xkcd.parse_comic_html()
-    downloadImage(xkcd.image_url, "./comics/xkcd/")
-
-main()
