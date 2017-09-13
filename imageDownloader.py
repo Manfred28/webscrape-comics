@@ -4,12 +4,13 @@ import requests
 def download_image(episodes, destination):
     number_of_downloaded_episodes = 0
     for comic_id, url in episodes.items():
-        if not already_downloaded(destination, "img" + comic_id):
+        file_name = "img" + comic_id
+        if not already_downloaded(destination, file_name):
             try:
                 img_data = requests.get(url)
                 ''' if not already_downloaded()(destination):
                     os.makedirs(destination) '''
-                file_name = create_file_name(img_data.headers, comic_id)
+                file_name += get_extension(img_data.headers)
                 create_image_file(img_data.content, destination, file_name)
                 number_of_downloaded_episodes += 1
             except requests.exceptions.RequestException as e:
@@ -23,9 +24,8 @@ def already_downloaded(destination, file_name):
             return True
 
 
-def create_file_name(img_data_headers, comic_id):
-    img_extension = img_data_headers["content-type"].split("/")[1]
-    return "img" + comic_id + "." + img_extension
+def get_extension(img_data_headers):
+    return img_data_headers["content-type"].split("/")[1]
 
 
 def create_image_file(img_content, destination, file_name):
