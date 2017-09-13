@@ -1,18 +1,19 @@
-import requests
 import os
+import requests
 
 def download_image(url, comic_id, destination):
-    try: 
+    try:
         img_data = requests.get(url)
-        create_destination_folder(destination)
+        if not does_file_exist(destination):
+            os.makedirs(destination)
         file_name = create_file_name(img_data.headers, comic_id)
-        create_image_file(img_data.content, destination, file_name)
+        if not does_file_exist(destination + file_name):
+            create_image_file(img_data.content, destination, file_name)
     except requests.exceptions.RequestException as e:
         print(e)
 
-def create_destination_folder(destination):
-    if not os.path.exists(destination):
-        os.makedirs(destination)
+def does_file_exist(path):
+    return os.path.exists(path)
 
 def create_file_name(img_data_headers, comic_id):
     img_extension = img_data_headers["content-type"].split("/")[1]
