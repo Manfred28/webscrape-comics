@@ -6,30 +6,30 @@ import feedparser
 class ComicRssHtmlParser:
     def __init__(self, rss):
         self.rss = feedparser.parse(rss)
-        self.latest_comic_url= ""
+        self.comic_episode_url= ""
+        self.episode_id = ""
         self.parsed_html = ""
-        self.image_download_url = ""
-        self.image_id = ""
+        self.episode_img_download_url = ""
+        self.comic_episodes = {}
 
-        self.get_latest_comic_url()
-        self.get_comic_id()
-        self.parse_comic_html()
-        self.parse_image_download_url()
+        self.get_comic_episodes()
 
-    def get_latest_comic_url(self):
-        self.latest_comic_url = self.rss.entries[0].guid
+    def get_comic_episodes(self):
+        for episode in self.rss.entries:
+            self.comic_episode_url = episode.guid
+            self.get_episode_id()
+            self.parse_comic_html()
+            self.parse_episode_img_download_url()
+            self.comic_episodes[self.episode_id] = self.episode_img_download_url
+
+    def get_episode_id(self):
+        self.episode_id = self.comic_episode_url.split("/")[-2]
 
     def parse_comic_html(self):
-        result = requests.get(self.latest_comic_url)
+        result = requests.get(self.comic_episode_url)
         comic_html = result.content
         self.parsed_html = BeautifulSoup(comic_html, 'html.parser')
-        self.parse_image_download_url()
+        self.parse_episode_img_download_url()
 
-    def parse_image_download_url(self):
-        self.image_download_url = ""
-
-    def get_comic_id(self):
-        self.image_id = self.latest_comic_url.split("/")[-2]
-
-
-
+    def parse_episode_img_download_url(self):
+        self.episode_img_download_url = ""
