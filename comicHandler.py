@@ -1,3 +1,4 @@
+import os
 from plyer import notification
 from cahParser import cah_parser
 from xkcdParser import xkcd_parser
@@ -6,12 +7,18 @@ from imageDownloader import download_image
 
 def getLatestCah():
     CAH = cah_parser()
-    number_of_episodes_downloaded = download_image(CAH.comic_episodes, "./comics/CAH/")
+    destination = "./comics/CAH/"
+    if not os.path.exists(destination):
+        os.makedirs(destination)
+    number_of_episodes_downloaded = download_image(CAH.comic_episodes, destination)
     send_notification(number_of_episodes_downloaded, "Cyanide and Happiness")
 
 def getLatestXkcd():
     xkcd = xkcd_parser()
-    number_of_episodes_downloaded = download_image(xkcd.comic_episodes, "./comics/xkcd/")
+    destination = "./comics/xkcd/"
+    if not os.path.exists(destination):
+        os.makedirs(destination)
+    number_of_episodes_downloaded = download_image(xkcd.comic_episodes, destination)
     send_notification(number_of_episodes_downloaded, "xkcd")
 
 def send_notification(episodes_downloaded, comic_name):
