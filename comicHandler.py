@@ -4,7 +4,7 @@ from cahParser import cah_parser
 from xkcdParser import xkcd_parser
 from imageDownloader import download_image
 
-
+#Could be a simple function...
 class ComicHandler:
     def __init__(self, comic, name, download_destination):
         self.comic = comic()
