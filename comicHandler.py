@@ -5,21 +5,17 @@ from xkcdParser import xkcd_parser
 from imageDownloader import download_image
 
 
-def getLatestCah():
-    CAH = cah_parser()
-    destination = "./comics/CAH/"
-    if not os.path.exists(destination):
-        os.makedirs(destination)
-    number_of_episodes_downloaded = download_image(CAH.comic_episodes, destination)
-    send_notification(number_of_episodes_downloaded, "Cyanide and Happiness")
+class ComicHandler:
+    def __init__(self, comic, name, destination):
+        self.comic = comic()
+        self.download_destination = destination
+        self.comic_name = name
 
-def getLatestXkcd():
-    xkcd = xkcd_parser()
-    destination = "./comics/xkcd/"
-    if not os.path.exists(destination):
-        os.makedirs(destination)
-    number_of_episodes_downloaded = download_image(xkcd.comic_episodes, destination)
-    send_notification(number_of_episodes_downloaded, "xkcd")
+        if not os.path.exists(destination):
+            os.makedirs(destination)
+        number_of_episodes_downloaded = download_image(self.comic.comic_episodes, destination)
+        send_notification(number_of_episodes_downloaded, name)
+
 
 def send_notification(episodes_downloaded, comic_name):
     if episodes_downloaded > 0:
@@ -29,7 +25,7 @@ def send_notification(episodes_downloaded, comic_name):
         )
 
 def main():
-    getLatestXkcd()
-    getLatestCah()
+    cah_handler = ComicHandler(cah_parser, "Cyanide and Happiness", "./comics/CAH/")
+    xkcd_handler = ComicHandler(xkcd_parser, "xkcd", "./comics/xkcd/")
 
 main()
