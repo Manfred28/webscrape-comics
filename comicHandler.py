@@ -18,6 +18,7 @@ class ComicHandler:
         number_of_episodes_downloaded = download_image(self.Comic.episode_download_links, self.download_destination)
         notifications.send_notification(number_of_episodes_downloaded, self.name)
 
+
     def filter_already_downloaded_episodes(self):
         new_episodes = {}
         for comic_id in self.Comic.new_episodes.keys():
@@ -26,6 +27,7 @@ class ComicHandler:
                 if not episode_file_name in downloaded_episodes:
                     new_episodes[comic_id] = self.Comic.new_episodes[comic_id]
         self.Comic.new_episodes = new_episodes
+
 
 def main():
     cah_handler = ComicHandler(cah_parser, "Cyanide and Happiness", "./comics/CAH/")
