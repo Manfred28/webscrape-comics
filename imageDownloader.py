@@ -8,7 +8,7 @@ def download_image(episodes, destination):
         if not already_downloaded(destination, file_name):
             try:
                 img_data = requests.get(url)
-                file_name += get_extension(img_data.headers)
+                file_name += "." + get_extension(img_data.headers)
                 create_image_file(img_data.content, destination, file_name)
                 number_of_downloaded_episodes += 1
             except requests.exceptions.RequestException as e:
