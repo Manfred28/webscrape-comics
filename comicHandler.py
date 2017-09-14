@@ -6,17 +6,15 @@ from imageDownloader import download_image
 
 
 class ComicHandler:
-    def __init__(self, comic, name, destination):
+    def __init__(self, comic, name, download_destination):
         self.comic = comic()
-        self.download_destination = destination
-        self.comic_name = name
+        self.download_destination = download_destination
+        self.name = name
 
-        if not os.path.exists(destination):
-            os.makedirs(destination)
-        number_of_episodes_downloaded = download_image(self.comic.comic_episodes, destination)
-        notifications.send_notification(number_of_episodes_downloaded, name)
-
-
+        if not os.path.exists(self.download_destination):
+            os.makedirs(self.download_destination)
+        number_of_episodes_downloaded = download_image(self.comic.comic_episodes, self.download_destination)
+        notifications.send_notification(number_of_episodes_downloaded, self.name)
 
 
 def main():
