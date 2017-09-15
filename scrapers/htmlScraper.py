@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 
 
-class ComicRssHtmlParser:
+class HtmlScraper:
     def __init__(self):
         self.parsed_html = ""
         self.comic_episode_url = ""

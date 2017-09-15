@@ -1,11 +1,11 @@
 import os
-import notifications
-from rssScraper import RssScraper
-from cahParser import cah_parser
-from xkcdParser import xkcd_parser
-from imageDownloader import download_image
+from notifications.notifications import send_notification
+from scrapers.rssScraper import RssScraper
+from scrapers.cahHtmlScraper import cah_scraper
+from scrapers.xkcdHtmlScraper import xkcd_scraper
+from downloader.imageDownloader import download_image
 
-#Could be a simple function...
+
 class ComicHandler:
     def __init__(self, Comic, rss_feed, name, download_destination):
         self.latest_episodes = RssScraper(rss_feed).latest_episodes
@@ -23,7 +23,7 @@ class ComicHandler:
         self.filter_already_downloaded_episodes()
         self.Comic.get_episode_download_links(self.filtered_episodes)
         number_of_episodes_downloaded = download_image(self.Comic.episode_download_links, self.download_destination)
-        notifications.send_notification(number_of_episodes_downloaded, self.name)
+        send_notification(number_of_episodes_downloaded, self.name)
 
 
     def filter_already_downloaded_episodes(self):
@@ -37,7 +37,7 @@ class ComicHandler:
 
 
 def main():
-    cah_handler = ComicHandler(cah_parser, "https://explosm-1311.appspot.com", "Cyanide and Happiness", "./comics/CAH/")
-    xkcd_handler = ComicHandler(xkcd_parser, "https://xkcd.com/rss.xml", "xkcd", "./comics/xkcd/")
+    cah_handler = ComicHandler(cah_scraper, "https://explosm-1311.appspot.com", "Cyanide and Happiness", "./comics/CAH/")
+    xkcd_handler = ComicHandler(xkcd_scraper, "https://xkcd.com/rss.xml", "xkcd", "./comics/xkcd/")
 
 main()
