@@ -2,7 +2,7 @@ from comicParser import ComicRssHtmlParser
 
 class cah_parser(ComicRssHtmlParser):
     def __init__(self):
-        super().__init__("https://explosm-1311.appspot.com/")
+        super().__init__()
 
 
     def parse_episode_img_download_url(self):

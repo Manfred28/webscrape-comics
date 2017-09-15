@@ -2,7 +2,7 @@ from comicParser import ComicRssHtmlParser
 
 class xkcd_parser(ComicRssHtmlParser):
     def __init__(self):
-        super().__init__("https://xkcd.com/rss.xml")
+        super().__init__()
 
 
     def parse_episode_img_download_url(self):
