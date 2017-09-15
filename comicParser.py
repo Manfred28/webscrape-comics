@@ -19,11 +19,11 @@ class ComicRssHtmlParser:
 
 
     def get_episode_download_links(self):
-        for episode_id in self.new_episodes.keys():
-            self.comic_episode_url = self.new_episodes[episode_id]
+        for episode in self.new_episodes.keys():
+            self.comic_episode_url = self.new_episodes[episode]
             self.parse_comic_html()
             self.parse_episode_img_download_url()
-            self.episode_download_links[episode_id] = self.episode_img_download_url
+            self.episode_download_links[episode] = self.episode_img_download_url
 
 
     def get_episode_id(self):

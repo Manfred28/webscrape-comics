@@ -3,8 +3,7 @@ import requests
 
 def download_image(episodes, destination):
     number_of_downloaded_episodes = 0
-    for comic_id, url in episodes.items():
-        file_name = "img" + comic_id
+    for file_name, url in episodes.items():
         if not already_downloaded(destination, file_name):
             try:
                 img_data = requests.get(url)

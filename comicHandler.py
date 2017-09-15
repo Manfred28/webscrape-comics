@@ -25,7 +25,7 @@ class ComicHandler:
             episode_file_name = "img" + comic_id
             for downloaded_episodes in os.listdir(self.download_destination):
                 if not episode_file_name in downloaded_episodes:
-                    new_episodes[comic_id] = self.Comic.new_episodes[comic_id]
+                    new_episodes[episode_file_name] = self.Comic.new_episodes[comic_id]
         self.Comic.new_episodes = new_episodes
 
 
