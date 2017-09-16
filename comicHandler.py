@@ -30,11 +30,14 @@ class ComicHandler:
         new_episodes = {}
         for comic_id in self.latest_episodes.keys():
             episode_file_name = "img" + comic_id
-            for downloaded_episodes in os.listdir(self.download_destination):
-                if not episode_file_name in downloaded_episodes:
-                    new_episodes[episode_file_name] = self.latest_episodes[comic_id]
+            if not self.is_existing_file(self.download_destination, episode_file_name):
+                new_episodes[episode_file_name] = self.latest_episodes[comic_id]
         self.filtered_episodes = new_episodes
 
+    def is_existing_file(self, destination, file_name):
+        for name in os.listdir(destination):
+            if file_name in name:
+                return True
 
 def main():
     cah_handler = ComicHandler(cah_scraper, "https://explosm-1311.appspot.com", "Cyanide and Happiness", "./comics/CAH/")
