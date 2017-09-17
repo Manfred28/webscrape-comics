@@ -12,7 +12,8 @@ class ComicHandler:
         self.filtered_episodes = {}
         self.Comic = Comic()
         self.download_destination = download_destination
-        self.name = name
+        self.comic_name = name
+        self.downloaded_episodes_path = []
 
         self.generator()
 
@@ -22,8 +23,8 @@ class ComicHandler:
             os.makedirs(self.download_destination)
         self.filter_already_downloaded_episodes()
         self.Comic.get_episode_download_links(self.filtered_episodes)
-        number_of_episodes_downloaded = download_image(self.Comic.episode_download_links, self.download_destination)
-        send_notification(len(number_of_episodes_downloaded), self.name)
+        self.downloaded_episodes_path = download_image(self.Comic.episode_download_links, self.download_destination)
+        send_notification(len(self.downloaded_episodes_path), self.comic_name)
 
 
     def filter_already_downloaded_episodes(self):
