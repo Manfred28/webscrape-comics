@@ -25,6 +25,7 @@ class ComicHandler:
         self.Comic.get_episode_download_links(self.filtered_episodes)
         self.downloaded_episodes_path = download_image(self.Comic.episode_download_links, self.download_destination)
         send_notification(len(self.downloaded_episodes_path), self.comic_name)
+        self.open_downloaded_files()
 
 
     def filter_already_downloaded_episodes(self):
@@ -39,6 +40,12 @@ class ComicHandler:
         for name in os.listdir(destination):
             if file_name in name:
                 return True
+
+
+    def open_downloaded_files(self):
+        for path in self.downloaded_episodes_path:
+            os.system("start " + path)
+
 
 def main():
     cah_handler = ComicHandler(cah_scraper, "https://explosm-1311.appspot.com", "Cyanide and Happiness", "./comics/CAH/")
