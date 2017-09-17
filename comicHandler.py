@@ -23,7 +23,7 @@ class ComicHandler:
         self.filter_already_downloaded_episodes()
         self.Comic.get_episode_download_links(self.filtered_episodes)
         number_of_episodes_downloaded = download_image(self.Comic.episode_download_links, self.download_destination)
-        send_notification(number_of_episodes_downloaded, self.name)
+        send_notification(len(number_of_episodes_downloaded), self.name)
 
 
     def filter_already_downloaded_episodes(self):
