@@ -1,5 +1,5 @@
 import requests
-import os
+
 
 def download_image(episodes, destination):
     downloaded_episodes = []
