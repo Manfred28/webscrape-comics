@@ -49,7 +49,7 @@ class ComicHandler:
 
 
 def main():
-    cah_handler = ComicHandler(cah_scraper, "https://explosm-1311.appspot.com", "Cyanide and Happiness", "./comics/CAH/")
-    xkcd_handler = ComicHandler(xkcd_scraper, "https://xkcd.com/rss.xml", "xkcd", "./comics/xkcd/")
+    cah_handler = ComicHandler(cah_scraper, "https://explosm-1311.appspot.com", "Cyanide and Happiness", "c:/comics/CAH/")
+    xkcd_handler = ComicHandler(xkcd_scraper, "https://xkcd.com/rss.xml", "xkcd", "c:/comics/xkcd/")
 
 main()
